@@ -57,7 +57,11 @@ def intel(it,db):
  return dict(daily_forecast=round(daily,2),baseline_daily=round(base,2),recent_daily=round(recent,2),usage_change_pct=round(change,1),days_of_supply=round(dos,2),lead_time_demand=round(lead_d,2),stockout_risk=stock,expiry_risk=expiry,abnormal_usage_risk=abnormal,emergency_reserve_risk=reserve,overall_risk=overall,risk_factors=factors or ['No major supply-chain risk is currently detected.'],days_to_expiry=days,expected_consumption_before_expiry=round(expected,2) if expected is not None else None,potential_leftover=round(leftover,2) if leftover is not None else None,target_stock=round(target,2),recommended_order=order,recommendation=rec,history=[{'date':x.day.isoformat(),'actual':x.qty,'forecast':round(daily,2)} for x in rows])
 
 def public(it): return {'id':it.id,'item_code':it.code,'name':it.name,'category':it.category,'current_stock':it.stock,'emergency_reserve':it.reserve,'unit':it.unit,'lead_time_days':it.lead,'safety_buffer':it.buffer,'expiry_date':it.expiry,'supplier':it.supplier}
-app=FastAPI(title='MediPulse Intelligence API'); app.add_middleware(CORSMiddleware,allow_origins=['http://localhost:5173','http://127.0.0.1:5173'],allow_methods=['*'],allow_headers=['*'])
+app=FastAPI(title='MediPulse Intelligence API'); app.add_middleware(CORSMiddleware,allow_origins=[
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://medipulse-1-kll5.onrender.com'
+],,allow_methods=['*'],allow_headers=['*'])
 class Login(BaseModel): email:str; password:str
 @app.get('/api/health')
 def health(): return {'status':'ok'}
